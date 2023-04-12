@@ -58,7 +58,7 @@ const DraggableMaze = ({
     }
   };
 
-  document.el.addEventListener("touchmove", handleDrag);
+  document.addEventListener("touchmove", handleDrag);
 
   document.addEventListener(
     "mouseup",
