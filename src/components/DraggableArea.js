@@ -85,7 +85,7 @@ const DraggableMaze = ({
             width: 50,
             backgroundColor: "#c7c3c1",
             cursor: "grab",
-            transition: "0.35s ease-in-out",
+            transition: "0.1s linear",
           }}
         >
           <Player
