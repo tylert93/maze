@@ -1,10 +1,10 @@
-const Circle = ({ height, width }) => (
+const Circle = ({ unit }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
     fill="currentColor"
-    height={height}
-    width={width}
+    height={unit * 0.8}
+    width={unit * 0.8}
   >
     <path
       fillRule="evenodd"

@@ -1,7 +1,5 @@
 const Popup = ({ setShowPopup }) => {
-  const handleClick = () => {
-    window.location.reload();
-  };
+  const handleClick = () => setShowPopup(false);
 
   return (
     <>

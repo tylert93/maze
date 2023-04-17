@@ -1,37 +1,25 @@
 import DraggableArea from "./components/DraggableArea";
 import MazeLayout from "./components/MazeLayout";
-import Flag from "./components/icons/Flag";
-import Ticket from "./components/icons/Ticket";
-import Cake from "./components/icons/Cake";
 import { useState, useRef, useEffect } from "react";
 import Wallet from "./components/Wallet";
 import Popup from "./components/Popup";
+import { MAX_COINS, START_COORD } from "./config/constants";
+import { mazes } from "./config/mazes";
 import "./App.css";
 
 const App = () => {
   const ref = useRef();
 
-  const [coins, setCoins] = useState(5);
+  const [mazeNo, setMazeNo] = useState(0);
+  const [mazeConfig, setMazeConfig] = useState(mazes[mazeNo]);
+  const [coordPosition, setCoordPosition] = useState(START_COORD);
+  const [coins, setCoins] = useState(MAX_COINS);
   const [showPopup, setShowPopup] = useState(false);
   const [unit, setUnit] = useState(0);
 
-  const grid = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 0, 0, 0, 1, 0, 0, 0, 0],
-    [1, 0, 0, 0, 1, 0, 0, 0, 0],
-    [1, 0, 0, 0, 1, 0, 0, 0, 0],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 0, 0, 0, 1, 0, 0, 0, 1],
-    [1, 0, 0, 0, 1, 0, 0, 0, 1],
-    [1, 0, 0, 0, 1, 0, 0, 0, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 0, 0, 0, 1, 0, 0, 0, 0],
-    [1, 0, 0, 0, 1, 0, 0, 0, 0],
-    [0, 0, 0, 0, 1, 0, 0, 0, 0],
-  ];
+  const [collisions, setCollisions] = useState([...mazeConfig.collisions]);
 
-  const [collisions, setCollisions] = useState([]);
+  console.log("No of collisions: ", collisions.length);
 
   useEffect(() => {
     const handleResize = () => {
@@ -42,50 +30,43 @@ const App = () => {
 
     handleResize();
 
-    setCollisions([
-      {
-        id: "finsh",
-        coord: [8, 0],
-        element: <Flag key="flag" unit={unit} />,
-        value: 0,
-        isEnd: true,
-      },
-      {
-        id: "ticket",
-        coord: [0, 3],
-        element: <Ticket key="ticket" unit={unit} />,
-        value: 2,
-        isEnd: false,
-      },
-      {
-        id: "cake",
-        coord: [4, 7],
-        element: <Cake key="cake" unit={unit} />,
-        value: 1,
-        isEnd: false,
-      },
-    ]);
-
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [unit]);
+  }, []);
+
+  useEffect(() => {
+    setMazeConfig(mazes[mazeNo]);
+    setCoordPosition(START_COORD);
+  }, [mazeNo]);
+
+  useEffect(() => {
+    setCollisions([...mazeConfig.collisions]);
+  }, [mazeConfig]);
 
   return (
-    <div className="app-container" onResize={() => window.location.reload()}>
+    <div className="app-container">
       <div className="maze-container" ref={ref}>
         <DraggableArea
-          grid={grid}
+          grid={mazeConfig.grid}
           collisions={collisions}
           coins={coins}
           setCoins={setCoins}
           setCollisions={setCollisions}
+          mazeNo={mazeNo}
+          setMazeNo={setMazeNo}
+          coordPosition={coordPosition}
+          setCoordPosition={setCoordPosition}
           setShowPopup={setShowPopup}
           unit={unit}
         />
-        <MazeLayout grid={grid} collisions={collisions} unit={unit} />
+        <MazeLayout
+          grid={mazeConfig.grid}
+          collisions={collisions}
+          unit={unit}
+        />
       </div>
       <Wallet coins={coins} unit={unit} />
       {showPopup && <Popup setShowPopup={setShowPopup} />}

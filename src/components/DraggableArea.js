@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import Draggable from "react-draggable";
 import isCollision from "../utils/isCollision";
 import areArraysEqual from "../utils/areArraysEqual";
-import Player from "./icons/Player";
+import ActivePlayer from "./icons/ActivePlayer";
+import InactivePlayer from "./icons/InactivePlayer";
+import { mazes } from "../config/mazes";
 
 const DraggableMaze = ({
   grid,
@@ -10,11 +12,14 @@ const DraggableMaze = ({
   setCollisions,
   coins,
   setCoins,
+  setMazeNo,
+  coordPosition,
+  setCoordPosition,
   setShowPopup,
+  mazeNo,
   unit,
 }) => {
-  const [coordPosition, setCoordPosition] = useState({ x: 4, y: 12 });
-  const [position, setPosition] = useState({
+  const [gridPosition, setGridPosition] = useState({
     x: unit * coordPosition,
     y: unit * coordPosition,
   });
@@ -39,13 +44,10 @@ const DraggableMaze = ({
     const { x, y, deltaX, deltaY } = gridData;
 
     // check if player is on non-playable square
-    if (!grid[y][x]) {
-      console.log("here", grid[y][x]);
-      return true;
-    }
+    if (!grid[y][x]) return true;
 
     // check if movement is diagonal
-    //if (deltaX === deltaY) return true;
+    if (deltaX === deltaY) return true;
 
     return false;
   };
@@ -56,9 +58,7 @@ const DraggableMaze = ({
       {
         id: "player",
         coord: [gridData.lastX, gridData.lastY],
-        element: (
-          <Player unit={unit} color={"red"} backgroundColor={"#c7c3c1"} />
-        ),
+        element: InactivePlayer,
         value: 0,
         isEnd: false,
       },
@@ -81,21 +81,24 @@ const DraggableMaze = ({
       deltaY: Math.abs(Math.round(deltaY / unit)),
     };
 
-    console.log("UNIT: ", unit);
-    console.log("GRID DATA: ", gridData);
-
-    if (isMoveOutOfBounds(grid, gridData)) {
+    const handleOutOfBounds = () => {
       if (!outOfBounds) {
         addPlayerMarker(gridData);
       }
 
       setOutOfBounds(true);
       return false;
+    };
+
+    if (isMoveOutOfBounds(grid, gridData)) {
+      return handleOutOfBounds();
     } else if (!outOfBounds) {
       const coord = [gridData.x, gridData.y];
 
       if (isCollision(coord, collisions)) {
         const collisionData = getCollisionData(gridData, collisions);
+
+        if (collisionData.value > coins) return handleOutOfBounds();
 
         setCollisions(
           collisions.filter((c, idx) => idx !== collisionData.index)
@@ -103,12 +106,16 @@ const DraggableMaze = ({
         setCoins(coins - collisionData.value);
 
         if (collisionData.isEnd) {
+          if (mazeNo < mazes.length - 1) {
+            setMazeNo((prev) => prev + 1);
+          }
+
           setShowPopup(true);
         }
       }
 
       setCoordPosition({ x: gridData.x, y: gridData.y });
-      setPosition({ x, y });
+      setGridPosition({ x, y });
     }
   };
 
@@ -120,8 +127,8 @@ const DraggableMaze = ({
   };
 
   useEffect(() => {
-    setPosition({ x: unit * coordPosition.x, y: unit * coordPosition.y });
-  }, [unit]);
+    setGridPosition({ x: unit * coordPosition.x, y: unit * coordPosition.y });
+  }, [unit, coordPosition]);
 
   return (
     <div
@@ -136,17 +143,20 @@ const DraggableMaze = ({
         scale={1}
         onDrag={handleDrag}
         bounds="parent"
-        position={position}
+        position={gridPosition}
       >
         <div
           className="handle draggable-element"
           style={{
             height: unit,
             width: unit,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
             opacity: outOfBounds ? 0 : 1,
           }}
         >
-          <Player unit={unit} color={outOfBounds ? "red" : "#09e026"} />
+          <ActivePlayer unit={unit} />
         </div>
       </Draggable>
     </div>

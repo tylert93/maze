@@ -1,17 +1,20 @@
 import areArraysEqual from "../utils/areArraysEqual";
 import isCollision from "../utils/isCollision";
+import { Fragment } from "react";
 
 const MazeLayout = ({ grid, collisions, unit }) => {
   const renderCollisionElement = (coord, collisions) => {
-    let element = <></>;
+    let Element = Fragment;
+
+    if (!isCollision(coord, collisions)) return Element;
 
     collisions.forEach((collision) => {
       if (areArraysEqual(collision.coord, coord)) {
-        element = collision.element;
+        Element = collision.element;
       }
     });
 
-    return element;
+    return <Element unit={unit} {...Element.elementProps} />;
   };
 
   return (
@@ -22,18 +25,19 @@ const MazeLayout = ({ grid, collisions, unit }) => {
             const coord = [colIdx, rowIdx];
 
             return col ? (
-              isCollision(coord, collisions) ? (
-                renderCollisionElement(coord, collisions)
-              ) : (
-                <div
-                  key={`${colIdx}, ${rowIdx}`}
-                  style={{
-                    height: unit,
-                    width: unit,
-                    backgroundColor: "#c7c3c1",
-                  }}
-                />
-              )
+              <div
+                key={`${colIdx}, ${rowIdx}`}
+                style={{
+                  height: unit,
+                  width: unit,
+                  backgroundColor: "#c7c3c1",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                {renderCollisionElement(coord, collisions)}
+              </div>
             ) : (
               <div
                 key={`${colIdx}, ${rowIdx}`}
