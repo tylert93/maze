@@ -1,9 +1,9 @@
-const Target = ({ height, width, color }) => (
+const Player = ({ unit, color, backgroundColor = "none" }) => (
   <div
     style={{
-      height: "50px",
-      width: "50px",
-      backgroundColor: "#c7c3c1",
+      height: unit,
+      width: unit,
+      backgroundColor: backgroundColor,
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
@@ -14,8 +14,8 @@ const Target = ({ height, width, color }) => (
       viewBox="0 0 24 24"
       fill={color}
       stroke="black"
-      height={height}
-      width={width}
+      height={unit * 0.7}
+      width={unit * 0.7}
     >
       <path
         fillRule="evenodd"
@@ -26,4 +26,4 @@ const Target = ({ height, width, color }) => (
   </div>
 );
 
-export default Target;
+export default Player;

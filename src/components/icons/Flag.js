@@ -1,8 +1,8 @@
-const Target = ({ height, width }) => (
+const Flag = ({ unit }) => (
   <div
     style={{
-      height: "50px",
-      width: "50px",
+      height: unit,
+      width: unit,
       backgroundColor: "#c7c3c1",
       display: "flex",
       justifyContent: "center",
@@ -14,8 +14,8 @@ const Target = ({ height, width }) => (
       viewBox="0 0 24 24"
       fill="red"
       stroke="black"
-      height={height}
-      width={width}
+      height={unit * 0.8}
+      width={unit * 0.8}
     >
       <path
         fillRule="evenodd"
@@ -26,4 +26,4 @@ const Target = ({ height, width }) => (
   </div>
 );
 
-export default Target;
+export default Flag;

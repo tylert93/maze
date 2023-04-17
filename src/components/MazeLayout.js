@@ -1,7 +1,7 @@
 import areArraysEqual from "../utils/areArraysEqual";
 import isCollision from "../utils/isCollision";
 
-const MazeLayout = ({ grid, collisions }) => {
+const MazeLayout = ({ grid, collisions, unit }) => {
   const renderCollisionElement = (coord, collisions) => {
     let element = <></>;
 
@@ -17,7 +17,7 @@ const MazeLayout = ({ grid, collisions }) => {
   return (
     <div className="maze-layout">
       {grid.map((row, rowIdx) => (
-        <div style={{ display: "flex" }}>
+        <div key={`row ${rowIdx}`} style={{ display: "flex" }}>
           {row.map((col, colIdx) => {
             const coord = [colIdx, rowIdx];
 
@@ -26,18 +26,20 @@ const MazeLayout = ({ grid, collisions }) => {
                 renderCollisionElement(coord, collisions)
               ) : (
                 <div
+                  key={`${colIdx}, ${rowIdx}`}
                   style={{
-                    height: "50px",
-                    width: "50px",
+                    height: unit,
+                    width: unit,
                     backgroundColor: "#c7c3c1",
                   }}
                 />
               )
             ) : (
               <div
+                key={`${colIdx}, ${rowIdx}`}
                 style={{
-                  height: "50px",
-                  width: "50px",
+                  height: unit,
+                  width: unit,
                   backgroundColor: "white",
                 }}
               />

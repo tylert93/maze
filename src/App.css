@@ -1,6 +1,17 @@
-.container {
+.app-container {
+  max-width: 450px;
+  margin: auto;
+}
+
+.maze-container {
   position: relative;
-  width: 450px;
+  width: 100%;
+}
+
+.draggable-element {
+  background-color: none;
+  cursor: grab;
+  transition: 0.1s linear;
 }
 
 .draggable-area {
