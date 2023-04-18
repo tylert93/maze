@@ -3,8 +3,8 @@ const Circle = ({ unit }) => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
     fill="currentColor"
-    height={unit * 0.8}
-    width={unit * 0.8}
+    height={unit * 0.7}
+    width={unit * 0.7}
   >
     <path
       fillRule="evenodd"

@@ -10,13 +10,14 @@ const DraggableMaze = ({
   grid,
   collisions,
   setCollisions,
-  coins,
-  setCoins,
+  mazeNo,
   setMazeNo,
   coordPosition,
   setCoordPosition,
+  coins,
+  setCoins,
   setShowPopup,
-  mazeNo,
+  setAreMazesFinished,
   unit,
 }) => {
   const [gridPosition, setGridPosition] = useState({
@@ -66,6 +67,15 @@ const DraggableMaze = ({
     setCollisions(newCollisions);
   };
 
+  const handleOutOfBounds = (gridData) => {
+    if (!outOfBounds) {
+      addPlayerMarker(gridData);
+    }
+
+    setOutOfBounds(true);
+    return false;
+  };
+
   const handleDrag = (e, data) => {
     const { x, y, lastX, lastY, deltaX, deltaY } = data;
 
@@ -78,24 +88,15 @@ const DraggableMaze = ({
       deltaY: Math.abs(Math.round(deltaY / unit)),
     };
 
-    const handleOutOfBounds = () => {
-      if (!outOfBounds) {
-        addPlayerMarker(gridData);
-      }
-
-      setOutOfBounds(true);
-      return false;
-    };
-
     if (isMoveOutOfBounds(grid, gridData)) {
-      return handleOutOfBounds();
+      return handleOutOfBounds(gridData);
     } else if (!outOfBounds) {
       const coord = [gridData.x, gridData.y];
 
       if (isCollision(coord, collisions)) {
         const collisionData = getCollisionData(gridData, collisions);
 
-        if (collisionData.value > coins) return handleOutOfBounds();
+        if (collisionData.value > coins) return handleOutOfBounds(gridData);
 
         setCollisions(
           collisions.filter((c, idx) => idx !== collisionData.index)
@@ -105,6 +106,8 @@ const DraggableMaze = ({
         if (collisionData.isEnd) {
           if (mazeNo < mazes.length - 1) {
             setMazeNo((prev) => prev + 1);
+          } else {
+            setAreMazesFinished(true);
           }
 
           setShowPopup(true);

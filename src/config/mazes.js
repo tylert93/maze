@@ -8,6 +8,7 @@ import House from "../components/icons/House";
 import Computer from "../components/icons/Computer";
 
 const weekOne = {
+  title: "Week one",
   grid: [
     [0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -50,6 +51,7 @@ const weekOne = {
 };
 
 const weekTwo = {
+  title: "Week two",
   grid: [
     [0, 0, 0, 0, 1, 0, 0, 0, 0],
     [0, 0, 0, 1, 1, 1, 1, 1, 1],
@@ -99,6 +101,7 @@ const weekTwo = {
 };
 
 const weekThree = {
+  title: "Week three",
   grid: [
     [1, 0, 0, 0, 0, 0, 0, 0, 0],
     [1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -155,6 +158,7 @@ const weekThree = {
 };
 
 const weekFour = {
+  title: "Week four",
   grid: [
     [1, 0, 0, 0, 1, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1],

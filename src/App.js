@@ -1,7 +1,8 @@
 import DraggableArea from "./components/DraggableArea";
 import MazeLayout from "./components/MazeLayout";
 import { useState, useRef, useEffect } from "react";
-import Wallet from "./components/Wallet";
+import HUD from "./components/HUD";
+import Review from "./components/Review";
 import Popup from "./components/Popup";
 import { MAX_COINS, START_COORD } from "./config/constants";
 import { mazes } from "./config/mazes";
@@ -16,6 +17,7 @@ const App = () => {
   const [coins, setCoins] = useState(MAX_COINS);
   const [showPopup, setShowPopup] = useState(false);
   const [unit, setUnit] = useState(0);
+  const [areMazesFinsihed, setAreMazesFinished] = useState(false);
 
   const [collisions, setCollisions] = useState([...mazeConfig.collisions]);
 
@@ -46,27 +48,35 @@ const App = () => {
 
   return (
     <div className="app-container">
-      <div className="maze-container" ref={ref}>
-        <DraggableArea
-          grid={mazeConfig.grid}
-          collisions={collisions}
-          coins={coins}
-          setCoins={setCoins}
-          setCollisions={setCollisions}
-          mazeNo={mazeNo}
-          setMazeNo={setMazeNo}
-          coordPosition={coordPosition}
-          setCoordPosition={setCoordPosition}
-          setShowPopup={setShowPopup}
-          unit={unit}
-        />
-        <MazeLayout
-          grid={mazeConfig.grid}
-          collisions={collisions}
-          unit={unit}
-        />
-      </div>
-      <Wallet coins={coins} unit={unit} />
+      {areMazesFinsihed ? (
+        <Review />
+      ) : (
+        <>
+          <div className="maze-container" ref={ref}>
+            <DraggableArea
+              grid={mazeConfig.grid}
+              collisions={collisions}
+              setCollisions={setCollisions}
+              mazeNo={mazeNo}
+              setMazeNo={setMazeNo}
+              coordPosition={coordPosition}
+              setCoordPosition={setCoordPosition}
+              coins={coins}
+              setCoins={setCoins}
+              setShowPopup={setShowPopup}
+              setAreMazesFinished={setAreMazesFinished}
+              unit={unit}
+            />
+            <MazeLayout
+              grid={mazeConfig.grid}
+              collisions={collisions}
+              unit={unit}
+            />
+          </div>
+          <HUD coins={coins} unit={unit} title={mazeConfig.title} />
+        </>
+      )}
+
       {showPopup && <Popup setShowPopup={setShowPopup} />}
     </div>
   );
