@@ -20,31 +20,28 @@ const MazeLayout = ({ grid, collisions, unit }) => {
   return (
     <div className="maze-layout">
       {grid.map((row, rowIdx) => (
-        <div key={`row ${rowIdx}`} style={{ display: "flex" }}>
+        <div className="maze-row" key={`row ${rowIdx}`}>
           {row.map((col, colIdx) => {
             const coord = [colIdx, rowIdx];
 
             return col ? (
               <div
+                className="maze-playable-tile"
                 key={`${colIdx}, ${rowIdx}`}
                 style={{
                   height: unit,
                   width: unit,
-                  backgroundColor: "#c7c3c1",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
                 }}
               >
                 {renderCollisionElement(coord, collisions)}
               </div>
             ) : (
               <div
+                className="maze-non-playable-tile"
                 key={`${colIdx}, ${rowIdx}`}
                 style={{
                   height: unit,
                   width: unit,
-                  backgroundColor: "white",
                 }}
               />
             );

@@ -19,8 +19,6 @@ const App = () => {
 
   const [collisions, setCollisions] = useState([...mazeConfig.collisions]);
 
-  console.log("No of collisions: ", collisions.length);
-
   useEffect(() => {
     const handleResize = () => {
       const unit = ref.current.clientWidth / 9;

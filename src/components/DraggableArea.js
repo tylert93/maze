@@ -67,9 +67,6 @@ const DraggableMaze = ({
   };
 
   const handleDrag = (e, data) => {
-    console.log("Event: ", e);
-    console.log("Data: ", data);
-
     const { x, y, lastX, lastY, deltaX, deltaY } = data;
 
     const gridData = {
@@ -150,9 +147,6 @@ const DraggableMaze = ({
           style={{
             height: unit,
             width: unit,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
             opacity: outOfBounds ? 0 : 1,
           }}
         >

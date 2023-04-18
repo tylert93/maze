@@ -7,7 +7,7 @@ const Wallet = ({ coins, unit }) => {
   const emptyArr = Array.from(Array(MAX_COINS - coins));
 
   return (
-    <div style={{ display: "flex", justifyContent: "end", marginTop: 30 }}>
+    <div className="wallet-container">
       {emptyArr.map((c, idx) => (
         <Circle key={`empty-coin-${idx}`} unit={unit} />
       ))}
