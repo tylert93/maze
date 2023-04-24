@@ -1,8 +1,8 @@
-const Computer = ({ unit }) => (
+const Computer = ({ unit, color = "#ff9000" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    fill="#ff9000"
+    fill={color}
     stroke="black"
     height={unit * 0.8}
     width={unit * 0.8}

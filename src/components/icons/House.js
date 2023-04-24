@@ -1,8 +1,8 @@
-const House = ({ unit }) => (
+const House = ({ unit, color = "#6ab9b9" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    fill="#6ab9b9"
+    fill={color}
     stroke="black"
     height={unit * 0.8}
     width={unit * 0.8}

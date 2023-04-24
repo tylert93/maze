@@ -2,8 +2,6 @@ import DraggableArea from "./components/DraggableArea";
 import MazeLayout from "./components/MazeLayout";
 import { useState, useRef, useEffect } from "react";
 import HUD from "./components/HUD";
-import Review from "./components/Review";
-import Popup from "./components/Popup";
 import { MAX_COINS, START_COORD } from "./config/constants";
 import { mazes } from "./config/mazes";
 import "./App.css";
@@ -15,9 +13,7 @@ const App = () => {
   const [mazeConfig, setMazeConfig] = useState(mazes[mazeNo]);
   const [coordPosition, setCoordPosition] = useState(START_COORD);
   const [coins, setCoins] = useState(MAX_COINS);
-  const [showPopup, setShowPopup] = useState(false);
   const [unit, setUnit] = useState(0);
-  const [areMazesFinsihed, setAreMazesFinished] = useState(false);
 
   const [collisions, setCollisions] = useState([...mazeConfig.collisions]);
 
@@ -48,36 +44,27 @@ const App = () => {
 
   return (
     <div className="app-container">
-      {areMazesFinsihed ? (
-        <Review />
-      ) : (
-        <>
-          <div className="maze-container" ref={ref}>
-            <DraggableArea
-              grid={mazeConfig.grid}
-              collisions={collisions}
-              setCollisions={setCollisions}
-              mazeNo={mazeNo}
-              setMazeNo={setMazeNo}
-              coordPosition={coordPosition}
-              setCoordPosition={setCoordPosition}
-              coins={coins}
-              setCoins={setCoins}
-              setShowPopup={setShowPopup}
-              setAreMazesFinished={setAreMazesFinished}
-              unit={unit}
-            />
-            <MazeLayout
-              grid={mazeConfig.grid}
-              collisions={collisions}
-              unit={unit}
-            />
-          </div>
-          <HUD coins={coins} unit={unit} title={mazeConfig.title} />
-        </>
-      )}
-
-      {showPopup && <Popup setShowPopup={setShowPopup} />}
+      <div className="maze-container" ref={ref}>
+        <DraggableArea
+          grid={mazeConfig.grid}
+          collisions={collisions}
+          setCollisions={setCollisions}
+          mazeNo={mazeNo}
+          setMazeNo={setMazeNo}
+          coordPosition={coordPosition}
+          setCoordPosition={setCoordPosition}
+          coins={coins}
+          setCoins={setCoins}
+          unit={unit}
+        />
+        <MazeLayout
+          grid={mazeConfig.grid}
+          collisions={collisions}
+          unit={unit}
+          coins={coins}
+        />
+      </div>
+      <HUD coins={coins} unit={unit} title={mazeConfig.title} />
     </div>
   );
 };

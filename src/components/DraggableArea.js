@@ -5,6 +5,7 @@ import areArraysEqual from "../utils/areArraysEqual";
 import ActivePlayer from "./icons/ActivePlayer";
 import InactivePlayer from "./icons/InactivePlayer";
 import { mazes } from "../config/mazes";
+import { MAX_COINS } from "../config/constants";
 
 const DraggableMaze = ({
   grid,
@@ -16,8 +17,6 @@ const DraggableMaze = ({
   setCoordPosition,
   coins,
   setCoins,
-  setShowPopup,
-  setAreMazesFinished,
   unit,
 }) => {
   const [gridPosition, setGridPosition] = useState({
@@ -107,10 +106,9 @@ const DraggableMaze = ({
           if (mazeNo < mazes.length - 1) {
             setMazeNo((prev) => prev + 1);
           } else {
-            setAreMazesFinished(true);
+            setMazeNo(0);
+            setCoins(MAX_COINS);
           }
-
-          setShowPopup(true);
         }
       }
 
@@ -135,6 +133,7 @@ const DraggableMaze = ({
       className="draggable-area"
       onTouchEnd={resetPlay}
       onMouseUp={resetPlay}
+      onMouseOut={resetPlay}
     >
       <Draggable
         axis="both"
@@ -144,6 +143,7 @@ const DraggableMaze = ({
         onDrag={handleDrag}
         bounds="parent"
         position={gridPosition}
+        disabled={outOfBounds}
       >
         <div
           className="handle draggable-element"

@@ -1,20 +1,26 @@
 import areArraysEqual from "../utils/areArraysEqual";
 import isCollision from "../utils/isCollision";
-import { Fragment } from "react";
 
-const MazeLayout = ({ grid, collisions, unit }) => {
+const MazeLayout = ({ grid, collisions, unit, coins }) => {
   const renderCollisionElement = (coord, collisions) => {
-    let Element = Fragment;
+    let Element;
+    let collisionData;
 
     if (!isCollision(coord, collisions)) return Element;
 
     collisions.forEach((collision) => {
       if (areArraysEqual(collision.coord, coord)) {
         Element = collision.element;
+        collisionData = collision;
       }
     });
 
-    return <Element unit={unit} {...Element.elementProps} />;
+    return Element ? (
+      <Element
+        unit={unit}
+        color={coins >= collisionData.value ? collisionData.color : "#747A87"}
+      />
+    ) : null;
   };
 
   return (

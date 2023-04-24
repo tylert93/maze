@@ -1,8 +1,8 @@
-const Phone = ({ unit }) => (
+const Phone = ({ unit, color = "#3D85C6" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    fill="#3D85C6"
+    fill={color}
     stroke="black"
     height={unit * 0.8}
     width={unit * 0.8}
