@@ -1,5 +1,5 @@
 import Coin from "./icons/Coin";
-import Circle from "./icons/Circle";
+import Coinslot from "./icons/Coinslot";
 import { MAX_COINS } from "../config/constants";
 
 const HUD = ({ coins, unit, title }) => {
@@ -11,7 +11,7 @@ const HUD = ({ coins, unit, title }) => {
       <p>{title}</p>
       <div className="wallet-container">
         {emptyArr.map((c, idx) => (
-          <Circle key={`empty-coin-${idx}`} unit={unit} />
+          <Coinslot key={`empty-coin-${idx}`} unit={unit} />
         ))}
         {coinsArr.map((c, idx) => (
           <Coin key={`coin-${idx}`} unit={unit} />

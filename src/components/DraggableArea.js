@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import Draggable from "react-draggable";
 import isCollision from "../utils/isCollision";
 import areArraysEqual from "../utils/areArraysEqual";
-import ActivePlayer from "./icons/ActivePlayer";
 import InactivePlayer from "./icons/InactivePlayer";
 import { mazes } from "../config/mazes";
 import { MAX_COINS } from "../config/constants";
+import Player from "./icons/Player";
 
 const DraggableMaze = ({
   grid,
@@ -153,7 +153,9 @@ const DraggableMaze = ({
             opacity: outOfBounds ? 0 : 1,
           }}
         >
-          <ActivePlayer unit={unit} />
+          <div style={{ position: "relative", zIndex: 100 }}>
+            <Player unit={unit} className="icon" />
+          </div>
         </div>
       </Draggable>
     </div>

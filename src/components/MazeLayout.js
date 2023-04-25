@@ -17,6 +17,7 @@ const MazeLayout = ({ grid, collisions, unit, coins }) => {
 
     return Element ? (
       <Element
+        className="icon"
         unit={unit}
         color={coins >= collisionData.value ? collisionData.color : "#747A87"}
       />

@@ -1,11 +1,11 @@
-import Flag from "../components/icons/Flag";
-import Ticket from "../components/icons/Ticket";
-import Cake from "../components/icons/Cake";
-import Bag from "../components/icons/Bag";
-import Cart from "../components/icons/Cart";
-import Phone from "../components/icons/Phone";
-import House from "../components/icons/House";
-import Computer from "../components/icons/Computer";
+import Business from "../components/icons/Business";
+import Finish from "../components/icons/Finish";
+import Car from "../components/icons/Car";
+import Nightout from "../components/icons/Nightout";
+import Takeout from "../components/icons/Takeout";
+import Coffee from "../components/icons/Coffee";
+import Rideshare from "../components/icons/Rideshare";
+import Shoes from "../components/icons/Shoes";
 
 const weekOne = {
   title: "Week one",
@@ -29,24 +29,21 @@ const weekOne = {
     {
       id: "finsh",
       coord: [8, 0],
-      element: Flag,
-      color: "red",
+      element: Finish,
       value: 0,
       isEnd: true,
     },
     {
-      id: "ticket",
+      id: "nightout",
       coord: [0, 3],
-      element: Ticket,
-      color: "orange",
+      element: Nightout,
       value: 2,
       isEnd: false,
     },
     {
-      id: "cake",
+      id: "takeout",
       coord: [4, 7],
-      element: Cake,
-      color: "pink",
+      element: Takeout,
       value: 1,
       isEnd: false,
     },
@@ -75,33 +72,29 @@ const weekTwo = {
     {
       id: "finsh",
       coord: [4, 0],
-      element: Flag,
-      color: "red",
+      element: Finish,
       value: 0,
       isEnd: true,
     },
     {
-      id: "bag",
+      id: "shoes",
       coord: [0, 5],
-      element: Bag,
-      color: "#8A3BD2",
+      element: Shoes,
       value: 3,
       isEnd: false,
     },
     {
-      id: "cart",
+      id: "coffee",
       coord: [4, 7],
-      element: Cart,
-      color: "yellow",
+      element: Coffee,
       value: 1,
       isEnd: false,
     },
     {
-      id: "phone",
+      id: "rideshare",
       coord: [8, 4],
-      element: Phone,
-      color: "#3D85C6",
-      value: 3,
+      element: Rideshare,
+      value: 2,
       isEnd: false,
     },
   ],
@@ -129,40 +122,35 @@ const weekThree = {
     {
       id: "finsh",
       coord: [0, 0],
-      element: Flag,
-      color: "red",
+      element: Finish,
       value: 0,
       isEnd: true,
     },
     {
-      id: "phone",
+      id: "rideshare",
       coord: [0, 5],
-      element: Phone,
-      color: "#3D85C6",
+      element: Rideshare,
       value: 2,
       isEnd: false,
     },
     {
-      id: "cart-1",
+      id: "coffee-1",
       coord: [8, 3],
-      element: Cart,
-      color: "yellow",
+      element: Coffee,
       value: 1,
       isEnd: false,
     },
     {
-      id: "cart-2",
+      id: "coffee-2",
       coord: [4, 7],
-      element: Cart,
-      color: "yellow",
+      element: Coffee,
       value: 1,
       isEnd: false,
     },
     {
-      id: "bag",
+      id: "shoes",
       coord: [8, 13],
-      element: Bag,
-      color: "#8A3BD2",
+      element: Shoes,
       value: 3,
       isEnd: false,
     },
@@ -191,25 +179,22 @@ const weekFour = {
     {
       id: "finsh",
       coord: [4, 0],
-      element: Flag,
-      color: "red",
+      element: Finish,
       value: 0,
       isEnd: true,
     },
     {
-      id: "house",
+      id: "business",
       coord: [0, 0],
-      element: House,
-      color: "#6ab9b9",
-      value: 4,
+      element: Business,
+      value: 5,
       isEnd: false,
     },
     {
-      id: "computer",
+      id: "car",
       coord: [8, 0],
-      element: Computer,
-      color: "#ff9000",
-      value: 3,
+      element: Car,
+      value: 4,
       isEnd: false,
     },
   ],
