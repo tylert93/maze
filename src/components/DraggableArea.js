@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import Draggable from "react-draggable";
-import isCollision from "../utils/isCollision";
-import areArraysEqual from "../utils/areArraysEqual";
+import isCollision from "../helpers/isCollision";
+import areArraysEqual from "../helpers/areArraysEqual";
 import InactivePlayer from "./icons/InactivePlayer";
 import { mazes } from "../config/mazes";
 import { MAX_COINS } from "../config/constants";
 import Player from "./icons/Player";
+import { voidMove, levelComplete, spendCoins } from "../utils/soundEffects";
 
 const DraggableMaze = ({
   grid,
@@ -66,8 +67,30 @@ const DraggableMaze = ({
     setCollisions(newCollisions);
   };
 
+  const handleCollision = (gridData, collisions) => {
+    const collisionData = getCollisionData(gridData, collisions);
+
+    if (collisionData.value > coins) return;
+
+    if (collisionData.isEnd) {
+      levelComplete.play();
+
+      if (mazeNo < mazes.length - 1) {
+        setMazeNo((prev) => prev + 1);
+      } else {
+        setMazeNo(0);
+        setCoins(MAX_COINS);
+      }
+    } else {
+      spendCoins.play();
+      setCollisions(collisions.filter((c, idx) => idx !== collisionData.index));
+      setCoins(coins - collisionData.value);
+    }
+  };
+
   const handleOutOfBounds = (gridData) => {
     if (!outOfBounds) {
+      voidMove.play();
       addPlayerMarker(gridData);
     }
 
@@ -93,23 +116,7 @@ const DraggableMaze = ({
       const coord = [gridData.x, gridData.y];
 
       if (isCollision(coord, collisions)) {
-        const collisionData = getCollisionData(gridData, collisions);
-
-        if (collisionData.value > coins) return handleOutOfBounds(gridData);
-
-        setCollisions(
-          collisions.filter((c, idx) => idx !== collisionData.index)
-        );
-        setCoins(coins - collisionData.value);
-
-        if (collisionData.isEnd) {
-          if (mazeNo < mazes.length - 1) {
-            setMazeNo((prev) => prev + 1);
-          } else {
-            setMazeNo(0);
-            setCoins(MAX_COINS);
-          }
-        }
+        handleCollision(gridData, collisions);
       }
 
       setCoordPosition({ x: gridData.x, y: gridData.y });
@@ -133,7 +140,7 @@ const DraggableMaze = ({
       className="draggable-area"
       onTouchEnd={resetPlay}
       onMouseUp={resetPlay}
-      onMouseOut={resetPlay}
+      // onMouseOut={resetPlay}
     >
       <Draggable
         axis="both"

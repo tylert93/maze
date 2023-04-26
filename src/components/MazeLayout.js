@@ -1,5 +1,5 @@
-import areArraysEqual from "../utils/areArraysEqual";
-import isCollision from "../utils/isCollision";
+import areArraysEqual from "../helpers/areArraysEqual";
+import isCollision from "../helpers/isCollision";
 
 const MazeLayout = ({ grid, collisions, unit, coins }) => {
   const renderCollisionElement = (coord, collisions) => {
@@ -17,9 +17,8 @@ const MazeLayout = ({ grid, collisions, unit, coins }) => {
 
     return Element ? (
       <Element
-        className="icon"
+        className={`icon ${coins >= collisionData.value ? "" : "see-through"}`}
         unit={unit}
-        color={coins >= collisionData.value ? collisionData.color : "#747A87"}
       />
     ) : null;
   };
